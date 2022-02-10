@@ -1,0 +1,2 @@
+# dukun
+dukun ramal

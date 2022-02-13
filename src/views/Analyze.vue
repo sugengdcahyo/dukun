@@ -1,58 +1,115 @@
 <template>
-  <div class="input-group mb-3 mt-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1"> Data History </span>
+  <form method="POST" @submit="submitPredict">
+    <div class="input-group mt-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="1000, 1240, 2220, ..."
+        v-model="histories"
+      />
+      <select class="custom-select custom-select-md mb-3" v-model="model">
+        <option selected>Pilih Nilai Mata Uang</option>
+        <option v-for="model in models" :key="model">
+          {{ model }}
+        </option>
+      </select>
     </div>
-    <input type="text" class="form-control" placeholder="1000, 1240, 2220, ..." aria-label="Username" aria-describedby="basic-addon1">
-    
-    <div class="input-group-append">
-      <div class="custom-file">
-        <input type="file" class="custom-file-input" id="FileData">
-      </div>
+
+    <div class="input-group mb-3">
+      <input type="number" class="form-control" placeholder="Only integer" v-model="range" required>
     </div>
-  </div>
-    
-  <button type="button" class="btn btn-primary btn-md">Prediksi</button>
-  
+
+    <button
+      type="button"
+      class="btn btn-primary btn-md"
+      v-on:click="submitPredict"
+    >
+      Prediksi
+    </button>
+  </form>
   <Chart
     :size="{ width: 800, height: 400 }"
-    :data="data"
+    :data="results"
     :margin="margin"
-    :direction="direction">
-
+    :direction="direction"
+    :axis="axis"
+  >
     <template #layers>
       <Grid strokeDasharray="2,2" />
-      <Line :dataKeys="['name', 'pl']" />
+      <Line :dataKeys="['time', 'value']" />
     </template>
-
+    
+    <template #widgets>
+      <Tooltip
+        borderColor="#48CAE4"
+        :config="{
+          value: {label: 'value', color: '#0077b6' },
+        }"
+      />
+    </template>
   </Chart>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
-import { Chart, Grid, Line } from 'vue3-charts'
-import { plByMonth } from '@/data'
+import axios from "axios";
+import { Chart, Grid, Line, Tooltip } from "vue3-charts";
 
-export default defineComponent({
-  name: 'LineChart',
-  components: { Chart, Grid, Line },
-  setup() {
-    const data = ref(plByMonth)
-    const direction = ref('horizontal')
-    const margin = ref({
-      left: 0,
-      top: 20,
-      right: 20,
-      bottom: 0
-    })
+export default {
+  name: "ChartDisplay",
+  components: { Chart, Grid, Line, Tooltip},
 
-    return { data, direction, margin }
-  }
-})
+  data() {
+    return {
+      histories: [],
+      models: [],
+      model: "",
+      range: "",
+      results: [],
+      direction: "horizontal",
+      margin: {
+        left: 0,
+        top: 20,
+        right: 20,
+        bottom: 0,
+      },
+
+      axis: {
+        secondary: {
+          domain: ['dataMin', 'dataMax + 1000'],
+          type: 'linear',
+          ticks: 8
+        }
+      }
+    };
+  },
+
+  mounted() {
+    axios
+      .get("https://dlstm.sugengdcahyo.com/api/models")
+      .then(
+        (response) => (
+          (this.models = response.models),
+          console.log((this.models = response.data.models))
+        )
+      );
+  },
+
+  methods: {
+    submitPredict: function () {
+      axios.post(
+        "https://dlstm.sugengdcahyo.com/api/predict/", 
+        {
+          histories: this.histories,
+          model: this.model,
+          range: this.range
+        }).then(
+          (response) => (
+            this.results=JSON.parse(JSON.stringify(response.data)),
+            console.log(this.results),
+            console.log(this.results.length)
+          )
+        )
+    },
+  },
+};
 </script>
-
-<!--<style>
-#app {
-  color: #2ecc71
-}
-</style>-->

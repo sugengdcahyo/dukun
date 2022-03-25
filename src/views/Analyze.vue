@@ -8,7 +8,7 @@
         v-model="histories"
       />
       <select class="custom-select custom-select-md mb-3" v-model="model">
-        <option selected>Pilih Nilai Mata Uang</option>
+        <option selected value="">Pilih Nilai Mata Uang</option>
         <option v-for="model in models" :key="model">
           {{ model }}
         </option>
@@ -53,11 +53,11 @@
 <script>
 import axios from "axios";
 import { Chart, Grid, Line, Tooltip } from "vue3-charts";
+const BASE_URL = 'http://localhost:8000/api'
 
 export default {
   name: "ChartDisplay",
   components: { Chart, Grid, Line, Tooltip},
-
   data() {
     return {
       histories: [],
@@ -85,7 +85,8 @@ export default {
 
   mounted() {
     axios
-      .get("https://dlstm.sugengdcahyo.com/api/models")
+      //.get("https://dlstm.sugengdcahyo.com/api/models")
+      .get( BASE_URL + "/models")
       .then(
         (response) => (
           (this.models = response.models),
@@ -97,7 +98,7 @@ export default {
   methods: {
     submitPredict: function () {
       axios.post(
-        "https://dlstm.sugengdcahyo.com/api/predict/", 
+        BASE_URL+"/predict/", 
         {
           histories: this.histories,
           model: this.model,

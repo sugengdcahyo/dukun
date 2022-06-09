@@ -53,7 +53,7 @@
 <script>
 import axios from "axios";
 import { Chart, Grid, Line, Tooltip } from "vue3-charts";
-const BASE_URL = 'http://dlstm.sugengdcahyo.com/api'
+const BASE_URL = 'https://dlstm.sugengdcahyo.com/api'
 
 export default {
   name: "ChartDisplay",

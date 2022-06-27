@@ -17,6 +17,11 @@ export default {
   },
 
   mounted() {
+    let axiosHeaders = {headers:{
+        'Content-Type': 'application/json;charset=UTF-8',
+        "Access-Control-Allow-Origin": true,
+        "Access-Control-Allow-Credentials": true,
+    }}
     // get date 7 days
     axios
     .get( BASE_URL + "/histories", {params: {
@@ -24,7 +29,7 @@ export default {
       lte: self.lte, 
       bcc: this.$route.params.bcc,
       scc: this.$route.params.scc
-    }})
+    }}, axiosHeaders)
     .then(
       (response) => (
         (this.oneweeks = response.data),

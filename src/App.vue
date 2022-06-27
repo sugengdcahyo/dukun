@@ -1,13 +1,20 @@
 <template>
-  <!--<div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>-->
-
-  <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Prediksi nilai tukar uang</a>
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="/">Rate Exchange</a>
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/analyze">Analyze</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
-    <router-view/>
-  </div>
+    <div class="container">
+      <router-view/>
+    </div>
 </template>

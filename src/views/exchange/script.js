@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = 'https://dlstm.sugengdcahyo.com/api'
+const BASE_URL = process.env.VUE_APP_DLSTM_API
 
 export default {
   name: "Exchange",

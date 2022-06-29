@@ -85,7 +85,6 @@ export default {
 
   mounted() {
     axios
-      //.get("https://dlstm.sugengdcahyo.com/api/models")
       .get( BASE_URL + "/models")
       .then(
         (response) => (

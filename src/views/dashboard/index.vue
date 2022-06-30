@@ -14,10 +14,26 @@
   </div>
   <hr>
   
-  
   <div>
-    <!-- <rangedate-picker :props="props"></rangedate-picker> -->
-    <h2>Graph of change in 1 {{ selected_bcc }} to {{ selected_scc }}</h2>
+    <div class="row">
+      <div class="col-sm col-8">
+        <h2>Graph of change in 1 {{ selected_bcc }} to {{ selected_scc }}</h2>
+      </div>
+      <div class="col-sm col-4 text-right">
+        <div class="text-right">
+          <select class="form-control" @change="changeDateRange(selected_bcc, selected_scc, $event)">
+            <option selected disabled>Select Date Range</option>
+            <option value="week">1 week</option>
+            <option value="month">1 month</option>
+            <option value="year">1 year</option>
+            <!-- <option v-for="country in countries" :value="country.code" :key="country.code">{{ country.name }}</option> -->
+          </select>
+          <!-- <br><br>
+          <p><span>Selected country name: {{selectedCountry }}</span></p>
+          <p><span>User country: {{ user.address.country }}</span></p> -->
+        </div>
+      </div>
+    </div>
     <GChart
       type="LineChart"
       :options="options"

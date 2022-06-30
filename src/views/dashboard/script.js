@@ -16,7 +16,6 @@ export default {
         width: 'auto',
         height: 500,
         hAxis: {
-          title: 'Time',
           logScale: true
         },
         vAxis: {
@@ -118,6 +117,38 @@ export default {
             this.selected_scc = scc
           )
         )
+    },
+
+    changeDateRange: function(bcc, scc, event) {
+      const range = event.target.value
+      let columns = [["Date", "Rate"]]
+      let rows = []
+      let gte = new Date()
+      let lte = new Date().getTime()
+
+      if (range == 'week') {
+        gte = new Date().setDate(new Date().getDate() - 7)
+      } else if (range=='month') {
+        gte = new Date().setMonth(new Date().getMonth() - 1)
+      } else if (range == 'year') {
+        gte = new Date().setFullYear(new Date().getFullYear() - 1)
+      }
+      // console.log(gte, lte)
+      axios
+        .get(BASE_URL+'/dashboard/tables', {params: {bcc: bcc, scc: scc, gte: this.convertGlobalDate(gte), lte: this.convertGlobalDate(lte)}})
+        .then(
+          (response) => (
+            rows = this.convertHistoriesTimestamp(response.data.onemonth),
+            this.chartData = columns.concat(rows),
+            this.selected_bcc = bcc,
+            this.selected_scc = scc
+          )
+        )
+    },
+
+    convertGlobalDate(timestamp) {
+      const date = new Date(timestamp)
+      return date.getFullYear()+'-'+(date.getMonth() + 1)+'-'+date.getDate()
     },
 
     convertSimpleDate(timestamp){

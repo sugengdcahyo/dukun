@@ -21,6 +21,8 @@
     "raw-loader": "^4.0.2",
     "vue": "^3.0.0",
     "vue-chart-3": "^3.0.9",
+    "vue-google-charts": "^1.1.0",
+    "vue-rangedate-picker": "^1.0.0",
     "vue-router": "^4.0.0-0",
     "vue3-charts": "^1.1.28",
     "vuex": "^4.0.0-0"

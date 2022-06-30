@@ -1,40 +1,86 @@
 import axios from "axios";
+import { GChart } from "vue-google-charts";
 const BASE_URL = process.env.VUE_APP_DLSTM_API
 
 export default {
   name: "DashboardDisplay",
-  components: {},
+
+  components: { GChart},
+
   data() {
     return {
-        path_items: [],
-        charts: [],
-        selected_bcc: "",
+      chartData: [],
+      columns: [],
+      rows: [],
+      options: {
+        width: 'auto',
+        height: 500,
+        hAxis: {
+          title: 'Time',
+          logScale: true
+        },
+        vAxis: {
+          title: 'Rate',
+          logScale: false
+        },
+        crosshair: {
+          color: '#000',
+          trigger: 'selection'
+        },
+        actions: ['dragToZoom', 'rightClickToReset'],
+        trendlines: {
+          0: {type: 'exponential', color: '#333', opacity: 1},
+          1: {type: 'linear', color: '#111', opacity: .3}
+        }
+      },
+      path_items: [],
+      charts: [],
+      selected_bcc: "USD",
+      selected_scc: "IDR"
     }
   },
 
   mounted() {
+    let columns = [["Date", "Rate"]]
+    let rows = []
     axios
-    .get( BASE_URL + "/dashboard/charts")
-    .then(
-      (response) => (
-        console.log(response.data),
-        (this.charts = response.data)
-      )
-    )
-    axios
-      .get( BASE_URL + "/models")
+      .get( BASE_URL + '/dashboard/tables')
       .then(
         (response) => (
-          (this.models = response.models),
-          console.log((this.models = response.data.models))
+          rows = this.convertHistoriesTimestamp(response.data.onemonth),
+          this.chartData = columns.concat(rows)
         )
-      );
+      )
+    axios
+      .get( BASE_URL + "/dashboard/charts")
+      .then(
+        (response) => (
+          (this.charts = response.data)
+        )
+      )
+  },
+
+  computed: {
   },
 
   methods: {
+    convertHistoriesTimestamp: function(histories) {
+      let histoData = []
+
+      for(const [index,value] of histories.entries()){
+        histoData[index] = [this.convertSimpleDate(value[0]), value[1]]
+      }
+      return histoData
+    },
+
+    convertCurrency: function (number) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number)
+    },
+
     selectBcc(bcc){
       self.selected_bcc = bcc
     },
+
     setColorStatus(statusValue){
       if (statusValue==0){
         return "warning"
@@ -43,8 +89,8 @@ export default {
       } else {
         return "success"
       }
-      // return statusValue >= 0 ? true : false
     },
+
     submitPredict: function () {
       axios.post(
         BASE_URL+"/predict/", 
@@ -54,15 +100,34 @@ export default {
           range: this.range
         }).then(
           (response) => (
-            this.results=JSON.parse(JSON.stringify(response.data)),
-            console.log(this.results),
-            console.log(this.results.length)
+            this.results=JSON.parse(JSON.stringify(response.data))
           )
         )
     },
-    convertDate(timestamp){
+
+    getDetailChart: function(bcc, scc) {
+      let columns = [["Date", "Rate"]]
+      let rows = []
+      axios
+        .get(BASE_URL+'/dashboard/tables', {params: {bcc: bcc, scc: scc}})
+        .then(
+          (response) => (
+            rows = this.convertHistoriesTimestamp(response.data.onemonth),
+            this.chartData = columns.concat(rows),
+            this.selected_bcc = bcc,
+            this.selected_scc = scc
+          )
+        )
+    },
+
+    convertSimpleDate(timestamp){
       const date = new Date(timestamp)
       return date.toLocaleDateString('id').replaceAll('/', '-')
+    },
+
+    convertDate(timestamp){
+      const date = new Date(timestamp)
+      return date.toLocaleDateString('id').replaceAll('/', '-') +" "+ date.toTimeString(+7)
     }
   },
 };

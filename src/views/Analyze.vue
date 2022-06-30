@@ -28,7 +28,7 @@
     </button>
   </form>
   <Chart
-    :size="{ width: 800, height: 400 }"
+    :size="{ width: 'auto', height: 400 }"
     :data="results"
     :margin="margin"
     :direction="direction"

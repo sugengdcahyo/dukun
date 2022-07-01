@@ -19,15 +19,14 @@ export default {
   mounted() {
     axios
     .get( BASE_URL + "/histories", {params: {
-      gte: self.gte, 
-      lte: self.lte, 
+      gte: this.gte, 
+      lte: this.lte, 
       bcc: this.$route.params.bcc,
       scc: this.$route.params.scc
     }})
     .then(
       (response) => (
-        (this.oneweeks = response.data),
-        console.log(this.oneweeks)
+        (this.oneweeks = response.data)
       )
     )
   },

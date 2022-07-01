@@ -16,16 +16,18 @@
   
   <div>
     <div class="row">
-      <div class="col-sm col-8">
+      <div class="col col-10">
         <h2>Graph of change in 1 {{ selected_bcc }} to {{ selected_scc }}</h2>
       </div>
-      <div class="col-sm col-4 text-right">
+      <div class="col col-2 text-right">
         <div class="text-right">
-          <select class="form-control" @change="changeDateRange(selected_bcc, selected_scc, $event)">
-            <option selected disabled>Select Date Range</option>
+          <select class="form-control" id="basic-table" @change="changeDateRange(selected_bcc, selected_scc, $event)">
+            <option disabled>Select Date Range</option>
             <option value="week">1 week</option>
-            <option value="month">1 month</option>
+            <option selected value="month">1 month</option>
+            <option value="yoy">year on year</option>
             <option value="year">1 year</option>
+            <option value="10year">10 year</option>
             <!-- <option v-for="country in countries" :value="country.code" :key="country.code">{{ country.name }}</option> -->
           </select>
           <!-- <br><br>
@@ -38,6 +40,15 @@
       type="LineChart"
       :options="options"
       :data="chartData"
+    />
+
+    <hr>
+    <BasicTable
+      :title="'Table 7 days ago'"
+      :selected_bcc="selected_bcc"
+      :selected_scc="selected_scc"
+      :data_table="chartData"
+      @changeDataTable="changeDataTable($event)"
     />
   </div>
 </template>

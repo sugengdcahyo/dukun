@@ -1,36 +1,38 @@
 import axios from "axios";
+import BasicTable from '@/components/BasicTable'
 import { GChart } from "vue-google-charts";
 const BASE_URL = process.env.VUE_APP_DLSTM_API
 
 export default {
   name: "DashboardDisplay",
 
-  components: { GChart},
+  components: { GChart, BasicTable },
 
   data() {
     return {
-      chartData: [],
+      chartData: [["Date", "Rate"]],
       columns: [],
       rows: [],
       options: {
         width: 'auto',
         height: 500,
         hAxis: {
+          title: 'timelines',
           logScale: true
         },
         vAxis: {
-          title: 'Rate',
+          title: 'rates',
           logScale: false
         },
-        crosshair: {
-          color: '#000',
-          trigger: 'selection'
-        },
-        actions: ['dragToZoom', 'rightClickToReset'],
+        //crosshair: {
+        //  color: '#000',
+        //  trigger: 'selection'
+        //},
         trendlines: {
           0: {type: 'exponential', color: '#333', opacity: 1},
           1: {type: 'linear', color: '#111', opacity: .3}
-        }
+        },
+        backgroundColor: '#f1f8e9',
       },
       path_items: [],
       charts: [],
@@ -43,7 +45,7 @@ export default {
     let columns = [["Date", "Rate"]]
     let rows = []
     axios
-      .get( BASE_URL + '/dashboard/tables')
+      .get( BASE_URL + '/dashboard/histogram')
       .then(
         (response) => (
           rows = this.convertHistoriesTimestamp(response.data.onemonth),
@@ -77,7 +79,7 @@ export default {
     },
 
     selectBcc(bcc){
-      self.selected_bcc = bcc
+      this.selected_bcc = bcc
     },
 
     setColorStatus(statusValue){
@@ -108,7 +110,7 @@ export default {
       let columns = [["Date", "Rate"]]
       let rows = []
       axios
-        .get(BASE_URL+'/dashboard/tables', {params: {bcc: bcc, scc: scc}})
+        .get(BASE_URL+'/dashboard/histogram', {params: {bcc: bcc, scc: scc}})
         .then(
           (response) => (
             rows = this.convertHistoriesTimestamp(response.data.onemonth),
@@ -125,17 +127,21 @@ export default {
       let rows = []
       let gte = new Date()
       let lte = new Date().getTime()
-
+      
       if (range == 'week') {
         gte = new Date().setDate(new Date().getDate() - 7)
       } else if (range=='month') {
         gte = new Date().setMonth(new Date().getMonth() - 1)
       } else if (range == 'year') {
         gte = new Date().setFullYear(new Date().getFullYear() - 1)
+      } else if (range == '10year') {
+        gte = new Date().setFullYear(new Date().getFullYear() - 10)
+      } else if (range == 'yoy') {
+        gte = new Date(new Date().getFullYear(), 0, 1); 
       }
       // console.log(gte, lte)
       axios
-        .get(BASE_URL+'/dashboard/tables', {params: {bcc: bcc, scc: scc, gte: this.convertGlobalDate(gte), lte: this.convertGlobalDate(lte)}})
+        .get(BASE_URL+'/dashboard/histogram', {params: {bcc: bcc, scc: scc, gte: this.convertGlobalDate(gte), lte: this.convertGlobalDate(lte)}})
         .then(
           (response) => (
             rows = this.convertHistoriesTimestamp(response.data.onemonth),

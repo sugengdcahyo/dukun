@@ -11,9 +11,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(rate, index) in this.data_table" :key="index">
-        <td> {{ rate[0] }} </td>
-        <td> {{ rate[1] }} </td>
+      <tr v-for="(row, index) in this.data_table" :key="index">
+        <td> {{ new Date(row.date).toLocaleDateString('id') }} </td>
+        <td> {{ new Date(row.date).getDay() }} </td>
+        <td> {{ row.rate }} </td>
+        <td> {{ row.rate }} </td>
+        <td> {{ row.rate }} </td>
       </tr>
     </tbody>
   </table>

@@ -11,6 +11,7 @@ export default {
   data() {
     return {
       chartData: [["Date", "Rate"]],
+      dataTable: [],
       columns: [],
       rows: [],
       options: {
@@ -49,7 +50,9 @@ export default {
       .then(
         (response) => (
           rows = this.convertHistoriesTimestamp(response.data.onemonth),
-          this.chartData = columns.concat(rows)
+          this.chartData = columns.concat(rows),
+          this.dataTable = response.data.data_tables,
+          console.log(this.dataTable)
         )
       )
     axios

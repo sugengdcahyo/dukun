@@ -47,8 +47,7 @@
       :title="'Table 7 days ago'"
       :selected_bcc="selected_bcc"
       :selected_scc="selected_scc"
-      :data_table="chartData"
-      @changeDataTable="changeDataTable($event)"
+      :data_table="dataTable"
     />
   </div>
 </template>

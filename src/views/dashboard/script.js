@@ -51,8 +51,7 @@ export default {
         (response) => (
           rows = this.convertHistoriesTimestamp(response.data.onemonth),
           this.chartData = columns.concat(rows),
-          this.dataTable = response.data.data_tables,
-          console.log(this.dataTable)
+          this.dataTable = response.data.data_tables
         )
       )
     axios
@@ -117,9 +116,11 @@ export default {
         .then(
           (response) => (
             rows = this.convertHistoriesTimestamp(response.data.onemonth),
+            this.dataTable = response.data.data_tables,
             this.chartData = columns.concat(rows),
             this.selected_bcc = bcc,
-            this.selected_scc = scc
+            this.selected_scc = scc,
+            console.log(this.dataTable)
           )
         )
     },

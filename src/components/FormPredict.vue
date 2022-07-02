@@ -14,19 +14,6 @@
 
     </div>
 
-    <!--<div class="form-group row">
-      <label for="range" class="col-sm-1 col-form-label">Rentang</label>
-      <div class="col-sm-11">
-        <input
-          type="number"
-          class="form-control"
-          id="range"
-          placeholder="Satuan Hari"
-          require
-        />
-      </div>
-    </div>-->
-
     <button type="button" class="btn btn-primary btn-md">Prediksi</button>
   </form>
 </template>

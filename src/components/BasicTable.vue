@@ -1,6 +1,6 @@
 <template>
   <h3>{{ this.title }}</h3>
-  <table class="table table-hover table-md">
+  <table class="table table-hover table-responsive-md table-md">
     <thead>
       <tr class="bg-dark text-white">
         <th scope="col">Date</th>
@@ -40,6 +40,7 @@ export default {
   },
 
   mounted() {
+    console.log(this.rows)
   },
   
   methods() {

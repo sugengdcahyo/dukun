@@ -1,0 +1,31 @@
+import api from '@/config/api'
+
+import BasicTable from '@/components/BasicTable'
+import LineChart from '@/components/LineChart'
+import { GChart } from "vue-google-charts"
+
+export default {
+  name: "AnalyzeDisplay",
+
+  components: { GChart, BasicTable, LineChart },
+
+  data() {
+    return {
+      selected_bcc: this.$route.params.bcc,
+      selected_scc: this.$route.params.scc,
+      data_tables: []
+    }
+  },
+
+  mounted() {
+    api
+      .get("/dashboard/histogram")
+      .then(
+        (response) => (
+          this.data_tables = response.data.data_tables,
+          console.log(this.data_tables),
+          this.chartData = response.data.data_tables
+        )
+      )
+  }
+}

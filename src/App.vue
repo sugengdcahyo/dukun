@@ -51,9 +51,6 @@ code {
             <a class="navbar-brand" href="/">Rate Exchange</a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="/analyze">Analyze</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="/benchmark">Benchmark</a>
               </li>
             </ul>

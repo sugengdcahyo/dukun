@@ -1,12 +1,16 @@
-import axios from "axios";
+import api from '@/config/api'
 import BasicTable from '@/components/BasicTable'
+import LineChart from '@/components/LineChart';
 import { GChart } from "vue-google-charts";
-const BASE_URL = process.env.VUE_APP_DLSTM_API
 
 export default {
   name: "DashboardDisplay",
 
-  components: { GChart, BasicTable },
+  components: { 
+    GChart, 
+    BasicTable,
+    LineChart
+  },
 
   data() {
     return {
@@ -14,7 +18,7 @@ export default {
       dataTable: [],
       columns: [],
       rows: [],
-      options: {
+      /** options: {
         width: 'auto',
         height: 500,
         hAxis: {
@@ -34,7 +38,7 @@ export default {
           1: {type: 'linear', color: '#111', opacity: .3}
         },
         backgroundColor: '#f1f8e9',
-      },
+      },**/
       path_items: [],
       charts: [],
       selected_bcc: "USD",
@@ -45,8 +49,8 @@ export default {
   mounted() {
     let columns = [["Date", "Rate"]]
     let rows = []
-    axios
-      .get( BASE_URL + '/dashboard/histogram')
+    api
+      .get('/dashboard/histogram')
       .then(
         (response) => (
           rows = this.convertHistoriesTimestamp(response.data.onemonth),
@@ -54,8 +58,8 @@ export default {
           this.dataTable = response.data.data_tables
         )
       )
-    axios
-      .get( BASE_URL + "/dashboard/charts")
+    api
+      .get("/dashboard/charts")
       .then(
         (response) => (
           (this.charts = response.data)
@@ -95,8 +99,7 @@ export default {
     },
 
     submitPredict: function () {
-      axios.post(
-        BASE_URL+"/predict/", 
+      api.post("/predict/", 
         {
           histories: this.histories,
           model: this.model,
@@ -111,8 +114,8 @@ export default {
     getDetailChart: function(bcc, scc) {
       let columns = [["Date", "Rate"]]
       let rows = []
-      axios
-        .get(BASE_URL+'/dashboard/histogram', {params: {bcc: bcc, scc: scc}})
+      api
+        .get('/dashboard/histogram', {params: {bcc: bcc, scc: scc}})
         .then(
           (response) => (
             rows = this.convertHistoriesTimestamp(response.data.onemonth),
@@ -124,8 +127,9 @@ export default {
           )
         )
     },
-
-    changeDateRange: function(bcc, scc, event) {
+    
+    changeDateRange: function(event, bcc, scc) {
+      console.log(bcc)
       const range = event.target.value
       let columns = [["Date", "Rate"]]
       let rows = []
@@ -143,9 +147,8 @@ export default {
       } else if (range == 'yoy') {
         gte = new Date(new Date().getFullYear(), 0, 1); 
       }
-      // console.log(gte, lte)
-      axios
-        .get(BASE_URL+'/dashboard/histogram', {params: {bcc: bcc, scc: scc, gte: this.convertGlobalDate(gte), lte: this.convertGlobalDate(lte)}})
+      api
+        .get('/dashboard/histogram', {params: {bcc: bcc, scc: scc, gte: this.convertGlobalDate(gte), lte: this.convertGlobalDate(lte)}})
         .then(
           (response) => (
             rows = this.convertHistoriesTimestamp(response.data.onemonth),

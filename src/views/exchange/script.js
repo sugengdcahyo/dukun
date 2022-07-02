@@ -39,7 +39,6 @@ export default {
     },
     getLocalDate(timestamp) {
       const date = new Date(timestamp)
-      console.log(date.getDay)
       return date.toLocaleDateString() 
     },
     setColorStatus(statusValue){
@@ -61,9 +60,7 @@ export default {
           range: this.range
         }).then(
           (response) => (
-            this.results=JSON.parse(JSON.stringify(response.data)),
-            console.log(this.results),
-            console.log(this.results.length)
+            this.results=JSON.parse(JSON.stringify(response.data))
           )
         )
     },

@@ -88,8 +88,7 @@ export default {
       .get( BASE_URL + "/models")
       .then(
         (response) => (
-          (this.models = response.models),
-          console.log((this.models = response.data.models))
+          (this.models = response.models)
         )
       );
   },
@@ -104,9 +103,7 @@ export default {
           range: this.range
         }).then(
           (response) => (
-            this.results=JSON.parse(JSON.stringify(response.data)),
-            console.log(this.results),
-            console.log(this.results.length)
+            this.results=JSON.parse(JSON.stringify(response.data))
           )
         )
     },

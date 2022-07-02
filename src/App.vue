@@ -57,7 +57,6 @@ code {
           </div>
         </div>
         <div class="col col-2 text-right">
-          <span>></span>
         </div>
       </div>
     </nav>

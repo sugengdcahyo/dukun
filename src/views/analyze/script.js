@@ -2,12 +2,13 @@ import api from '@/config/api'
 
 import BasicTable from '@/components/BasicTable'
 import LineChart from '@/components/LineChart'
+import FormPredict from '@/components/FormPredict'
 import { GChart } from "vue-google-charts"
 
 export default {
   name: "AnalyzeDisplay",
 
-  components: { GChart, BasicTable, LineChart },
+  components: { GChart, BasicTable, FormPredict, LineChart },
 
   data() {
     return {
@@ -47,19 +48,7 @@ export default {
         [
           1656720000000,
           14975.15
-        ],
-        /**["Date", "Range", "Predict"],
-        [1, 2, null],
-        [2, 5, null],
-        [3, 4, null],
-        [4, 6, null],
-        [5, 7, null],
-        [6, 3, null],
-        [7, 5, 5],
-        [8, null, 6],
-        [9, null, 7],
-        [10, null, 8],
-        [11, null, 2],**/
+        ]      
       ]
     }
   },
@@ -94,7 +83,7 @@ export default {
 
       for(const [index,value] of histories.entries()){
         histoData[index] = [
-          new Date(value[0]).toLocaleDateString('id').replaceAll('/', '-'), 
+          new Date(value[0]).toLocaleDateString('id'), 
           value[1]
         ]
       }

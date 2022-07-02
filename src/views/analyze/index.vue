@@ -1,10 +1,10 @@
 <template>
   <div class="row mt-4">
-    <div class="col-sm col-sm-2">
-      menus
+    <div class="col-sm col-sm-3">
+      <FormPredict/>
     </div>
 
-    <div class="col-sm col-sm-10">
+    <div class="col-sm col-sm-9">
       <LineChart
         :title="'Graph of change in 1 '+selected_bcc+' to '+selected_scc"
         :chartData="chartData"
@@ -13,7 +13,7 @@
         :selected_scc=selected_scc
         :selected_bcc=selected_bcc
       />
-
+      <hr>
       <BasicTable 
         :title="'one weeks'"
         :selected_bcc="selected_bcc"

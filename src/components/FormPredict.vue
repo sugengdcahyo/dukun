@@ -2,19 +2,27 @@
   <form v-on="submitPredict">
     <div class="input-group mt-3">
       <input
-        type="text"
+        type="number"
         class="form-control"
-        placeholder="1000, 1240, 2220, ..."
+        placeholder="0"
       />
-      <select class="custom-select custom-select-md mb-3">
-        <option selected>Pilih Nilai Mata Uang</option>
-        <option value="usd">IDR/JPY</option>
-        <option value="jpy">IDR/USD</option>
+      <select class="custom-select custom-select-md mb-2">
+        <option disabled selected>Times</option>
+        <option value="day">days</option>
+        <option value="week">weeks</option>
+        <option value="year">years</option>
       </select>
-
     </div>
-
-    <button type="button" class="btn btn-primary btn-md">Prediksi</button>
+    <select class="custom-select custom-select-md mb-2">
+      <option disabled selected>Models</option>
+      <option value="day">days</option>
+      <option value="week">weeks</option>
+      <option value="year">years</option>
+    </select>
+    <div>
+      <a href="/" class="btn btn-primary btn-sm mr-2">Back</a>
+      <button type="button" class="btn btn-primary btn-sm">Predict</button>
+    </div>
   </form>
 </template>
 <script>

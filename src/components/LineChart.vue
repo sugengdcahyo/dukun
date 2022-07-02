@@ -16,11 +16,13 @@
       </div>
     </div>
   </div>
+  <div class="relative">
   <GChart
     type="LineChart"
     :options="options"
     :data="chartData"
   />
+  </div>
 </template>
 
 
@@ -41,16 +43,19 @@ export default {
   },
 
   data() {
+    console.log(this.chartData)
     return {
       options: {
         width: 'auto',
         height: 500,
         hAxis: {
           title: 'timelines',
-          logScale: true
+          logScale: true,
+          minValue: 0, maxValue: 2100
         },
         vAxis: {
           title: 'rates',
+          format: 'Rp,000.00',
           logScale: false
         },
         //crosshair: {
@@ -59,7 +64,7 @@ export default {
         //},
         crosshair: { trigger: 'both', orientation: 'both' },
         trendlines: {
-          0: {type: 'exponential', color: '#333', opacity: 1},
+          0: {type: 'exponential', color: '#333', opacity: 1, showR2:true},
           1: {type: 'linear', color: '#111', opacity: .3},
           2: {type: 'polynomial', color: '#222', opacity: .5}
         },

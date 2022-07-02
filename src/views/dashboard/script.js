@@ -148,7 +148,14 @@ export default {
         gte = new Date(new Date().getFullYear(), 0, 1); 
       }
       api
-        .get('/dashboard/histogram', {params: {bcc: bcc, scc: scc, gte: this.convertGlobalDate(gte), lte: this.convertGlobalDate(lte)}})
+        .get('/dashboard/histogram', {
+          params: {
+            bcc: bcc, 
+            scc: scc, 
+            gte: this.convertGlobalDate(gte), 
+            lte: this.convertGlobalDate(lte)
+          }
+        })
         .then(
           (response) => (
             rows = this.convertHistoriesTimestamp(response.data.onemonth),

@@ -130,7 +130,7 @@ export default {
     
     changeDateRange: function(event, bcc, scc) {
       console.log(bcc)
-      const range = event.target.value
+      const range = event.target
       let columns = [["Date", "Rate"]]
       let rows = []
       let gte = new Date()

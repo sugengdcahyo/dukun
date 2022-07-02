@@ -11,18 +11,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, index) in this.data_table" :key="index">
-        <td> {{ new Date(row.date).toLocaleDateString('id') }} </td>
-        <td> {{ new Date(row.date).getDay() }} </td>
-        <td> {{ row.rate }} </td>
-        <td> {{ row.rate }} </td>
-        <td> {{ row.rate }} </td>
+      <tr v-for="(row, index) in rows" :key="index">
+        <td>{{ row.date }}</td>
+        <td>{{ row.day }}</td>
+        <td>{{ row.rate }}</td>
+        <td>{{ row.change }}</td>
+        <td>{{ row.change_percent }}</td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+// import convertCurrency from '@/helper/currency.js'
 export default {
   name: "BasicTable",
   
@@ -35,14 +36,50 @@ export default {
 
   data() {
     return {
-      rows: this.data_table,
+      rows: this.convertDataRows(this.data_table),
     }
   },
 
   mounted() {
   },
   
-  methods() {
+  methods: {
+    convertCurrency: function(number) {
+      console.log("conver")
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number)
+    },
+    convertPercentage: function (number) {
+      return `${number>=0 ? '+' : '' }${number}%`
+    },
+    convertDataRows: function(data) {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      let buckets = [];
+      for (const [index, item] of data.entries()) {
+        console.log(data[index])
+        const change = index == 0 ? 0 : data[index].rate - data[index-1].rate
+        const percentage = change == 0 ? 0 : change / item.rate
+        buckets.push(
+          {
+            "date": new Date(item.date).toLocaleDateString('id'),
+            "day": days[new Date(item.date).getDay()],
+            "rate": this.convertCurrency(item.rate),
+            "change": this.convertCurrency(change.toFixed(2)),
+            "change_percent": this.convertPercentage((percentage * 100).toFixed(2))
+          }
+        )
+      }
+      return buckets
+    },
+
+    setColorStatus(value){
+      if(value==0){
+        return "warning"
+      }else if (value > 0) {
+        return "success"
+      } else {
+        return "danger"
+      }
+    }
   }
 };
 </script>

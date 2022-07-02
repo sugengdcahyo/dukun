@@ -19,6 +19,7 @@
       :title="'Graph of change in 1 '+selected_bcc+' to '+selected_scc"
       :chartData="chartData"
       :options="options"
+      :toolHeader=true
       @select-range-changed="changeDateRange"
       :selected_scc=selected_scc
       :selected_bcc=selected_bcc

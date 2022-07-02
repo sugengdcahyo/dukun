@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col col-10">
+    <div class="col-md col-md-10">
       <h2>{{ this.title }}</h2>
     </div>
-    <div class="col col-2 text-right" v-if="toolHeader==true">
+    <div class="col-md col-md-2 text-right" v-if="toolHeader==true">
       <div class="text-right">
         <select class="form-control" id="basic-table" @change="$emit('select-range-changed', $event, selected_bcc, selected_scc)">
           <option disabled>Select Date Range</option>

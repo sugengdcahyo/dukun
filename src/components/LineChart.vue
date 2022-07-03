@@ -5,7 +5,7 @@
     </div>
     <div class="col-md col-md-2 text-right" v-if="toolHeader==true">
       <div class="text-right">
-        <select class="form-control" id="basic-table" @change="$emit('select-range-changed', $event, selected_bcc, selected_scc)">
+        <select class="form-control" id="basic-table" @change="$emit('selectRangeChanged', $event, selected_bcc, selected_scc)">
           <option disabled>Select Date Range</option>
           <option value="week">1 week</option>
           <option selected value="month">1 month</option>
@@ -35,19 +35,12 @@ export default {
   components: { GChart },
 
   //props: ["toolHeader", "chartData", "title", "selected_bcc", "selected_scc"],
-
-  emits: {
-    change: (params) => {
-      console.log(params)
-      return true
-    }
-  },
   props: {
     toolHeader: Boolean,
     chartData: Array,
     title: String, 
     selected_bcc: String, 
-    selected_scc: String
+    selected_scc: String,
   },
 
   data() {
@@ -83,7 +76,10 @@ export default {
   mounted() {
   },
   
-  methods() {
+  methods: {
+    selectRangeChanged: () => {
+      this.$emit('selectRangeChanged')  
+    }
   }
 };
 </script>

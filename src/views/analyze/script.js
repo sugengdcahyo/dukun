@@ -12,44 +12,10 @@ export default {
 
   data() {
     return {
+      chartData: [],
       selected_bcc: this.$route.params.bcc,
       selected_scc: this.$route.params.scc,
       data_tables: [],
-      chartDummy: [
-        ["Date", "Range"],
-        [
-          1656115200000,
-          14829.5
-        ],
-        [
-          1656201600000,
-          14834.601299
-        ],
-        [
-          1656288000000,
-          14807.7
-        ],
-        [
-          1656374400000,
-          14852.35
-        ],
-        [
-          1656460800000,
-          14880.5
-        ],
-        [
-          1656547200000,
-          14957.601798
-        ],
-        [
-          1656633600000,
-          14975.15
-        ],
-        [
-          1656720000000,
-          14975.15
-        ]      
-      ]
     }
   },
 
@@ -78,6 +44,16 @@ export default {
   },
 
   methods: {
+    getPredicted: function(event, params) {
+      event
+      api.
+        post('/analyze/predict/', {...params}).
+        then( (response) => {
+          this.chartData = response.data
+          console.log(this.chartData)
+        }).
+        catch(err=>console.warn(err))
+    },
     convertHistoriesTimestamp: function(histories) {
       let histoData = []
 

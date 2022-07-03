@@ -1,7 +1,12 @@
 <template>
   <div class="row mt-4">
     <div class="col-sm col-sm-3">
-      <FormPredict/>
+      <FormPredict
+        :selected_bcc="selected_bcc"
+        :selected_scc="selected_scc"
+        @submitPredict="getPredicted"
+        :params=predict
+      />
     </div>
 
     <div class="col-sm col-sm-9">

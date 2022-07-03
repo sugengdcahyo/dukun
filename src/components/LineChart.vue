@@ -34,6 +34,14 @@ export default {
   
   components: { GChart },
 
+  //props: ["toolHeader", "chartData", "title", "selected_bcc", "selected_scc"],
+
+  emits: {
+    change: (params) => {
+      console.log(params)
+      return true
+    }
+  },
   props: {
     toolHeader: Boolean,
     chartData: Array,
@@ -43,7 +51,6 @@ export default {
   },
 
   data() {
-    console.log(this.chartData)
     return {
       options: {
         width: 'auto',

@@ -122,15 +122,13 @@ export default {
             this.dataTable = response.data.data_tables,
             this.chartData = columns.concat(rows),
             this.selected_bcc = bcc,
-            this.selected_scc = scc,
-            console.log(this.dataTable)
+            this.selected_scc = scc
           )
         )
     },
     
     changeDateRange: function(event, bcc, scc) {
-      console.log(bcc)
-      const range = event.target
+      const range = event.target.value
       let columns = [["Date", "Rate"]]
       let rows = []
       let gte = new Date()

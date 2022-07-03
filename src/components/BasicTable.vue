@@ -40,12 +40,8 @@ export default {
     }
   },
 
-  mounted() {
-  },
-  
   methods: {
     convertCurrency: function(number) {
-      console.log("conver")
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number)
     },
     convertPercentage: function (number) {
@@ -55,9 +51,8 @@ export default {
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let buckets = [];
       for (const [index, item] of data.entries()) {
-        console.log(data[index])
-        const change = index == 0 ? 0 : data[index].rate - data[index-1].rate
-        const percentage = change == 0 ? 0 : change / item.rate
+        let change = index == 0 ? 0 : data[index].rate - data[index-1].rate
+        let percentage = change == 0 ? 0 : change / item.rate
         buckets.push(
           {
             "date": new Date(item.date).toLocaleDateString('id'),

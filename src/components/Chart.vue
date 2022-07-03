@@ -17,8 +17,6 @@ import { defineComponent, ref } from 'vue'
 import { Chart, Grid, Line } from 'vue3-charts'
 import { plByMonth } from '@/data'
 
-console.log(plByMonth)
-
 export default defineComponent(
   {
   name: 'LineChart',

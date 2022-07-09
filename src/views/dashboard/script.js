@@ -18,27 +18,6 @@ export default {
       dataTable: [],
       columns: [],
       rows: [],
-      /** options: {
-        width: 'auto',
-        height: 500,
-        hAxis: {
-          title: 'timelines',
-          logScale: true
-        },
-        vAxis: {
-          title: 'rates',
-          logScale: false
-        },
-        //crosshair: {
-        //  color: '#000',
-        //  trigger: 'selection'
-        //},
-        trendlines: {
-          0: {type: 'exponential', color: '#333', opacity: 1},
-          1: {type: 'linear', color: '#111', opacity: .3}
-        },
-        backgroundColor: '#f1f8e9',
-      },**/
       path_items: [],
       charts: [],
       selected_bcc: "USD",

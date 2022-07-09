@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, index) in rows" :key="index">
+      <tr v-for="(row, index) in convertDataRows(data_table)" :key="index">
         <td>{{ row.date }}</td>
         <td>{{ row.day }}</td>
         <td>{{ row.rate }}</td>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-// import convertCurrency from '@/helper/currency.js'
 export default {
   name: "BasicTable",
   
@@ -34,12 +33,6 @@ export default {
     selected_scc: String
   },
 
-  data() {
-    return {
-      rows: this.convertDataRows(this.data_table),
-    }
-  },
-
   methods: {
     convertCurrency: function(number) {
       return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number)
@@ -47,7 +40,10 @@ export default {
     convertPercentage: function (number) {
       return `${number>=0 ? '+' : '' }${number}%`
     },
-    convertDataRows: function(data) {
+    convertDataRows: function() {
+      const data = this.data_table
+      console.log("data")
+      console.log(data)
       const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       let buckets = [];
       for (const [index, item] of data.entries()) {

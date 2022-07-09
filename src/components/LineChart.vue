@@ -34,7 +34,6 @@ export default {
   
   components: { GChart },
 
-  //props: ["toolHeader", "chartData", "title", "selected_bcc", "selected_scc"],
   props: {
     toolHeader: Boolean,
     chartData: Array,
@@ -58,10 +57,6 @@ export default {
           format: 'Rp,000.00',
           logScale: false
         },
-        //crosshair: {
-        //  color: '#000',
-        //  trigger: 'selection'
-        //},
         crosshair: { trigger: 'both', orientation: 'both' },
         trendlines: {
           0: {type: 'exponential', color: '#333', opacity: 1, showR2:true},

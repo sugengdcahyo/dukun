@@ -58,11 +58,11 @@ export default {
           logScale: false
         },
         crosshair: { trigger: 'both', orientation: 'both' },
-        trendlines: {
-          0: {type: 'exponential', color: '#333', opacity: 1, showR2:true},
-          1: {type: 'linear', color: '#111', opacity: .3},
-          2: {type: 'polynomial', color: '#222', opacity: .5}
-        },
+        //trendlines: {
+        //  0: {type: 'exponential', color: '#333', opacity: 1, showR2:true},
+        //  1: {type: 'linear', color: '#111', opacity: .3},
+        //  2: {type: 'polynomial', color: '#222', opacity: .5}
+        //},
         backgroundColor: '#f1f8e9',
       }
     }
